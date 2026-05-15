@@ -652,7 +652,6 @@ function ComparisonTable() {
     { label: "Quote request form", s: false, b: true, x: true },
     { label: "Testimonials", s: false, b: true, x: true },
     { label: "Premium project positioning", s: false, b: false, x: true },
-    { label: "Monthly maintenance option", s: false, b: false, x: true },
   ];
   return (
     <section className="bg-secondary px-4 py-16 sm:py-20">
