@@ -110,21 +110,24 @@ function ProposalBar({ tier, setTier }: { tier: Tier; setTier: (t: Tier) => void
 }
 
 function SiteFrame({ tier, children }: { tier: Tier; children: React.ReactNode }) {
-  const labels: Record<Tier, { name: string; price: string; tag: string }> = {
+  const labels: Record<Tier, { name: string; price: string; tag: string; theme: string }> = {
     simple: {
       name: "SIMPLE — Starter Website",
-      price: "$750–$1,200",
-      tag: "Best for getting District Floors a clean professional presence quickly.",
+      price: "$250",
+      tag: "Minimal, clean, professional. Best for getting District Floors a presence quickly.",
+      theme: "theme-simple",
     },
     better: {
       name: "BETTER — Lead-Generation Website",
-      price: "$1,500–$2,500",
-      tag: "Best for turning visitors into quote requests and commercial project conversations.",
+      price: "$450",
+      tag: "Warm, modern, conversion-focused. Built to turn visitors into quote requests.",
+      theme: "theme-better",
     },
     best: {
       name: "BEST — Premium Contractor Website",
-      price: "$3,000–$5,000+",
-      tag: "Best for positioning District Floors as a serious commercial flooring partner and helping win larger jobs.",
+      price: "$550",
+      tag: "Dark, editorial, premium. Positions District Floors as a serious commercial partner.",
+      theme: "theme-best",
     },
   };
   const l = labels[tier];
@@ -142,7 +145,7 @@ function SiteFrame({ tier, children }: { tier: Tier; children: React.ReactNode }
           {l.price}
         </div>
       </div>
-      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
+      <div className={`${l.theme} overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-2xl`}>
         <div className="flex items-center gap-2 border-b border-border bg-muted px-4 py-2">
           <span className="h-3 w-3 rounded-full bg-destructive/70" />
           <span className="h-3 w-3 rounded-full bg-accent/70" />
