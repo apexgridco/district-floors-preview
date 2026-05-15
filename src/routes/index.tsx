@@ -75,9 +75,9 @@ function ProposalPreview() {
 
 function ProposalBar({ tier, setTier }: { tier: Tier; setTier: (t: Tier) => void }) {
   const tiers: { id: Tier; label: string; price: string }[] = [
-    { id: "simple", label: "Simple", price: "$750–$1,200" },
-    { id: "better", label: "Better", price: "$1,500–$2,500" },
-    { id: "best", label: "Best", price: "$3,000–$5,000+" },
+    { id: "simple", label: "Simple", price: "$250" },
+    { id: "better", label: "Better", price: "$450" },
+    { id: "best", label: "Best", price: "$550" },
   ];
   return (
     <div className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
