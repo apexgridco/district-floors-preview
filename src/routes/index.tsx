@@ -194,17 +194,24 @@ function Header({ tier }: { tier: Tier }) {
 }
 
 function Hero({ tier }: { tier: Tier }) {
+  const showImage = tier !== "simple";
   return (
     <section className="relative">
-      <div className="relative h-[480px] w-full sm:h-[560px]">
-        <img src={heroImg} alt="Commercial hardwood flooring" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/60 to-primary/20" />
+      <div className={`relative w-full ${tier === "simple" ? "h-[440px]" : "h-[480px] sm:h-[560px]"}`}>
+        {showImage ? (
+          <>
+            <img src={heroImg} alt="Commercial hardwood flooring" className="absolute inset-0 h-full w-full object-cover" />
+            <div className={`absolute inset-0 ${tier === "best" ? "bg-gradient-to-t from-primary via-primary/85 to-primary/40" : "bg-gradient-to-r from-primary/85 via-primary/60 to-primary/20"}`} />
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-primary" />
+        )}
         <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center px-6 sm:px-10">
           <div className="max-w-2xl text-primary-foreground">
             <span className="inline-block rounded-full border border-primary-foreground/30 bg-primary-foreground/10 px-3 py-1 text-xs font-medium uppercase tracking-widest">
-              Commercial Flooring · Northern VA
+              {tier === "best" ? "Commercial Flooring · Est. Northern VA" : "Commercial Flooring · Northern VA"}
             </span>
-            <h1 className="mt-5 text-4xl font-bold leading-[1.1] sm:text-5xl lg:text-6xl">
+            <h1 className={`mt-5 leading-[1.05] ${tier === "best" ? "text-5xl sm:text-6xl lg:text-7xl" : "text-4xl font-bold sm:text-5xl lg:text-6xl"}`}>
               Commercial Flooring Built for Projects That Need to Be Done Right
             </h1>
             <p className="mt-5 text-base text-primary-foreground/85 sm:text-lg">
