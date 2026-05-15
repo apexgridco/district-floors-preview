@@ -679,9 +679,9 @@ function ComparisonTable() {
               ))}
               <tr className="bg-muted">
                 <td className="border-t border-border px-4 py-4 font-bold">Investment</td>
-                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$750–$1,200</td>
-                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$1,500–$2,500</td>
-                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$3,000–$5,000+</td>
+                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$250</td>
+                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$450</td>
+                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$550</td>
               </tr>
             </tbody>
           </table>
