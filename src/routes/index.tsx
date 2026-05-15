@@ -53,7 +53,7 @@ function ProposalPreview() {
       <SiteFrame tier={tier}>
         <Header tier={tier} />
         <Hero tier={tier} />
-        <Services />
+        <Services tier={tier} />
         {tier !== "simple" && <Gallery tier={tier} />}
         {tier === "best" && <Industries />}
         <WhyUs tier={tier} />
@@ -262,18 +262,26 @@ const services = [
   { title: "Office & Retail Flooring", img: retailImg, desc: "Showroom-quality finishes that hold up to daily customer traffic." },
 ];
 
-function Services() {
+function Services({ tier }: { tier: Tier }) {
+  const showImages = tier === "best";
   return (
     <section id="services" className="px-6 py-16 sm:px-10 sm:py-20">
       <div className="mx-auto max-w-6xl">
         <SectionHead eyebrow="Services" title="Commercial flooring, end to end" />
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={`mt-10 grid gap-5 ${tier === "simple" ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
           {services.map((s) => (
             <div key={s.title} className="group overflow-hidden rounded-lg border border-border bg-card transition hover:shadow-lg">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-              </div>
+              {showImages && (
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+              )}
               <div className="p-5">
+                {!showImages && (
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-accent">
+                    <Hammer className="h-5 w-5" />
+                  </div>
+                )}
                 <h3 className="text-base font-bold">{s.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
               </div>
