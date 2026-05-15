@@ -53,7 +53,7 @@ function ProposalPreview() {
       <SiteFrame tier={tier}>
         <Header tier={tier} />
         <Hero tier={tier} />
-        <Services />
+        <Services tier={tier} />
         {tier !== "simple" && <Gallery tier={tier} />}
         {tier === "best" && <Industries />}
         <WhyUs tier={tier} />
@@ -75,9 +75,9 @@ function ProposalPreview() {
 
 function ProposalBar({ tier, setTier }: { tier: Tier; setTier: (t: Tier) => void }) {
   const tiers: { id: Tier; label: string; price: string }[] = [
-    { id: "simple", label: "Simple", price: "$750–$1,200" },
-    { id: "better", label: "Better", price: "$1,500–$2,500" },
-    { id: "best", label: "Best", price: "$3,000–$5,000+" },
+    { id: "simple", label: "Simple", price: "$250" },
+    { id: "better", label: "Better", price: "$450" },
+    { id: "best", label: "Best", price: "$550" },
   ];
   return (
     <div className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
@@ -110,21 +110,24 @@ function ProposalBar({ tier, setTier }: { tier: Tier; setTier: (t: Tier) => void
 }
 
 function SiteFrame({ tier, children }: { tier: Tier; children: React.ReactNode }) {
-  const labels: Record<Tier, { name: string; price: string; tag: string }> = {
+  const labels: Record<Tier, { name: string; price: string; tag: string; theme: string }> = {
     simple: {
       name: "SIMPLE — Starter Website",
-      price: "$750–$1,200",
-      tag: "Best for getting District Floors a clean professional presence quickly.",
+      price: "$250",
+      tag: "Minimal, clean, professional. Best for getting District Floors a presence quickly.",
+      theme: "theme-simple",
     },
     better: {
       name: "BETTER — Lead-Generation Website",
-      price: "$1,500–$2,500",
-      tag: "Best for turning visitors into quote requests and commercial project conversations.",
+      price: "$450",
+      tag: "Warm, modern, conversion-focused. Built to turn visitors into quote requests.",
+      theme: "theme-better",
     },
     best: {
       name: "BEST — Premium Contractor Website",
-      price: "$3,000–$5,000+",
-      tag: "Best for positioning District Floors as a serious commercial flooring partner and helping win larger jobs.",
+      price: "$550",
+      tag: "Dark, editorial, premium. Positions District Floors as a serious commercial partner.",
+      theme: "theme-best",
     },
   };
   const l = labels[tier];
@@ -142,7 +145,7 @@ function SiteFrame({ tier, children }: { tier: Tier; children: React.ReactNode }
           {l.price}
         </div>
       </div>
-      <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
+      <div className={`${l.theme} overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-2xl`}>
         <div className="flex items-center gap-2 border-b border-border bg-muted px-4 py-2">
           <span className="h-3 w-3 rounded-full bg-destructive/70" />
           <span className="h-3 w-3 rounded-full bg-accent/70" />
@@ -191,17 +194,24 @@ function Header({ tier }: { tier: Tier }) {
 }
 
 function Hero({ tier }: { tier: Tier }) {
+  const showImage = tier !== "simple";
   return (
     <section className="relative">
-      <div className="relative h-[480px] w-full sm:h-[560px]">
-        <img src={heroImg} alt="Commercial hardwood flooring" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/85 via-primary/60 to-primary/20" />
+      <div className={`relative w-full ${tier === "simple" ? "h-[440px]" : "h-[480px] sm:h-[560px]"}`}>
+        {showImage ? (
+          <>
+            <img src={heroImg} alt="Commercial hardwood flooring" className="absolute inset-0 h-full w-full object-cover" />
+            <div className={`absolute inset-0 ${tier === "best" ? "bg-gradient-to-t from-primary via-primary/85 to-primary/40" : "bg-gradient-to-r from-primary/85 via-primary/60 to-primary/20"}`} />
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-primary" />
+        )}
         <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-center px-6 sm:px-10">
           <div className="max-w-2xl text-primary-foreground">
             <span className="inline-block rounded-full border border-primary-foreground/30 bg-primary-foreground/10 px-3 py-1 text-xs font-medium uppercase tracking-widest">
-              Commercial Flooring · Northern VA
+              {tier === "best" ? "Commercial Flooring · Est. Northern VA" : "Commercial Flooring · Northern VA"}
             </span>
-            <h1 className="mt-5 text-4xl font-bold leading-[1.1] sm:text-5xl lg:text-6xl">
+            <h1 className={`mt-5 leading-[1.05] ${tier === "best" ? "text-5xl sm:text-6xl lg:text-7xl" : "text-4xl font-bold sm:text-5xl lg:text-6xl"}`}>
               Commercial Flooring Built for Projects That Need to Be Done Right
             </h1>
             <p className="mt-5 text-base text-primary-foreground/85 sm:text-lg">
@@ -252,18 +262,26 @@ const services = [
   { title: "Office & Retail Flooring", img: retailImg, desc: "Showroom-quality finishes that hold up to daily customer traffic." },
 ];
 
-function Services() {
+function Services({ tier }: { tier: Tier }) {
+  const showImages = tier === "best";
   return (
     <section id="services" className="px-6 py-16 sm:px-10 sm:py-20">
       <div className="mx-auto max-w-6xl">
         <SectionHead eyebrow="Services" title="Commercial flooring, end to end" />
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={`mt-10 grid gap-5 ${tier === "simple" ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
           {services.map((s) => (
             <div key={s.title} className="group overflow-hidden rounded-lg border border-border bg-card transition hover:shadow-lg">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-              </div>
+              {showImages && (
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img src={s.img} alt={s.title} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                </div>
+              )}
               <div className="p-5">
+                {!showImages && (
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-secondary text-accent">
+                    <Hammer className="h-5 w-5" />
+                  </div>
+                )}
                 <h3 className="text-base font-bold">{s.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
               </div>
@@ -661,9 +679,9 @@ function ComparisonTable() {
               ))}
               <tr className="bg-muted">
                 <td className="border-t border-border px-4 py-4 font-bold">Investment</td>
-                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$750–$1,200</td>
-                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$1,500–$2,500</td>
-                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$3,000–$5,000+</td>
+                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$250</td>
+                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$450</td>
+                <td className="border-t border-border px-4 py-4 text-center text-xs font-semibold">$550</td>
               </tr>
             </tbody>
           </table>
